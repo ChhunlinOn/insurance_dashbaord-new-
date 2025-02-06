@@ -1,10 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getTotalQuotation } from "@/services/dashboard/get-total-qoutation";
+import { getTotalAvgPremium } from "@/services/dashboard/get-avg-premuim";
+import { getTotalPending } from "@/services/dashboard/get-pending-qoutation";
+import { getTotalSumPending } from "@/services/dashboard/get-sum-quotation-pending";
+import { getTotalApproved } from "@/services/dashboard/get-approved-qoutation";
+import { getTotalApprovedCompany } from "@/services/dashboard/get-approved.company";
+import { getTotalAcceptCompany } from "@/services/dashboard/get-accept-company";
+import { getTotalAcceptsumCompany } from "@/services/dashboard/get-accept-company-sum";
 
 export async function QuotationDashboardCards() {
-  const totalSales = 10;
-  const totalProducts = 10;
-  const totalCustomers = 10;
-  const totalSuppliers = 10;
+  const totalSales = await getTotalQuotation();
+  const AVG_Premium = await getTotalAvgPremium();
+  const totalProducts = await getTotalPending();
+  const sum_pending = await getTotalSumPending();
+  const totalCustomers = await getTotalApproved();
+  const company_approved = await getTotalApprovedCompany();
+  const totalSuppliers = await getTotalAcceptCompany();
+  const sum_accepted_company = await getTotalAcceptsumCompany();
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -25,8 +37,8 @@ export async function QuotationDashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalSales.toFixed(2)}</div>
-          <p className="text-xs text-muted-foreground">Avg. Premium: $3,000</p>
+          <div className="text-2xl font-bold">{totalSales.toString()}</div>
+          <p className="text-xs text-muted-foreground">Avg. Premium: ${AVG_Premium}</p>
         </CardContent>
       </Card>
       <Card className="bg-orange-50">
@@ -49,8 +61,8 @@ export async function QuotationDashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalProducts}</div>
-          <p className="text-xs text-muted-foreground">Max Premium: $6,000</p>
+          <div className="text-2xl font-bold">{totalProducts.toString()}</div>
+          <p className="text-xs text-muted-foreground">Max Premium: ${sum_pending}</p>
         </CardContent>
       </Card>
       <Card className="bg-blue-50">
@@ -74,8 +86,8 @@ export async function QuotationDashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalCustomers}</div>
-          <p className="text-xs text-muted-foreground">Number of company: 2</p>
+          <div className="text-2xl font-bold">{totalCustomers.toString()}</div>
+          <p className="text-xs text-muted-foreground">Number of company: {company_approved.toString()}</p>
         </CardContent>
       </Card>
       <Card className="bg-green-50">
@@ -98,8 +110,8 @@ export async function QuotationDashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalSuppliers}</div>
-          <p className="text-xs text-muted-foreground">Premium Amount: $500</p>
+          <div className="text-2xl font-bold">{totalSuppliers.toString()}</div>
+          <p className="text-xs text-muted-foreground">Premium Amount: ${sum_accepted_company.toString()}</p>
         </CardContent>
       </Card>
     </div>
