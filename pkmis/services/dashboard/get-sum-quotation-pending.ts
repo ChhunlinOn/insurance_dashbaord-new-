@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 export async function getTotalSumPending(): Promise<string> {
   const data = await prisma.$queryRaw<
     { count: string }[]
-  >`SELECT SUM(proposed_premium) as count
+  >`SELECT MAX(proposed_premium) as count
 FROM public.quotation
 WHERE quotation.quotation_status = 'Pending'`;
   console.log(data);
